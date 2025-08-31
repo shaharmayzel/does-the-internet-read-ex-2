@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Behavioral Targeting — Builder (Catalog)</title>
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="wrap row-between">
+            <h1>Behavioral Targeting — Builder</h1>
+            <div class="controls">
+                <!-- global optional controls (no search inside items) -->
+                <button id="reset" class="btn" type="button">Reset traits</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <p class="hint">Pick item → choose action → save a trait → make a conclusion → show a message.</p>
+
+        <div class="grid-2">
+            <!-- Left: Catalog -->
+            <section class="card">
+                <h2>Demo catalog</h2>
+                <div class="shop-controls">
+                    <input id="searchBox" class="search" type="search" placeholder="Search products..." />
+                    <nav class="chips" aria-label="Categories">
+                        <button class="chip active" data-cat="all" type="button">All</button>
+                        <button class="chip" data-cat="audio" type="button">Audio</button>
+                        <button class="chip" data-cat="peripherals" type="button">Peripherals</button>
+                        <button class="chip" data-cat="accessories" type="button">Accessories</button>
+                        <button class="chip" data-cat="power" type="button">Power</button>
+                        <button class="chip" data-cat="smart" type="button">Smart</button>
+                    </nav>
+                </div>
+                <div id="catalog" class="catalog"></div>
+                <p class="hint">
+                    Each product has: image (hover), <code>.price-btn</code>, <code>.specs-link</code>,
+                    <code>.add-btn</code>.<br />
+                    You can target a specific item by ID (e.g. <code>#priceBtn-hp1</code>) or all by class (e.g.
+                    <code>.price-btn</code>).
+                </p>
+            </section>
+
+            <!-- Right: Output -->
+            <section class="card">
+                <h2>Live message</h2>
+                <div id="message" class="message">No segment yet.</div>
+
+                <h3>Saved traits</h3>
+                <pre id="traitsBox">{}</pre>
+
+                <details class="cheats">
+                    <summary>Selectors reference</summary>
+                    <div id="selectorsBox" class="mono small"></div>
+                </details>
+            </section>
+        </div>
+    </main>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>

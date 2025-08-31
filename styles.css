@@ -1,0 +1,253 @@
+:root {
+    --bg: #ffffff;
+    --fg: #0f172a;
+    --muted: #6b7280;
+    --card: #ffffff;
+    --border: #e5e7eb;
+    --code: #f9fafb;
+    --accent: #2563eb;
+    --shadow: 0 10px 30px rgba(2, 6, 23, .06);
+}
+
+* {
+    box-sizing: border-box
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0
+}
+
+body {
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.55;
+}
+
+.wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px
+}
+
+.row-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px
+}
+
+.topbar {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    z-index: 5
+}
+
+.topbar .wrap {
+    padding: 14px 20px
+}
+
+h1 {
+    font-size: 22px;
+    margin: 0
+}
+
+h2 {
+    margin: 0 0 12px
+}
+
+.card {
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: var(--shadow);
+}
+
+.hint {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 12px 0 18px
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px
+}
+
+@media (min-width: 960px) {
+    .grid-2 {
+        grid-template-columns: 1.3fr .7fr;
+    }
+}
+
+.catalog {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+@media (min-width: 960px) {
+    .catalog {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.card-prod {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+    transition: transform .12s ease;
+}
+
+.card-prod:hover {
+    transform: translateY(-2px);
+}
+
+.prod-img {
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #eef2ff, #f8fafc);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #334155;
+}
+
+.prod-body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1
+}
+
+.prod-title {
+    font-size: 14px;
+    margin: 0
+}
+
+.price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px
+}
+
+.price {
+    font-weight: 700
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 10px;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.btn:hover {
+    border-color: #cbd5e1
+}
+
+.btn.primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: transparent;
+}
+
+.btn.primary:hover {
+    filter: brightness(0.98)
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap
+}
+
+.mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace
+}
+
+.small {
+    font-size: 12px
+}
+
+pre {
+    background: var(--code);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    overflow: auto
+}
+
+.message {
+    padding: 12px;
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    background: var(--code)
+}
+
+details.cheats summary {
+    cursor: pointer;
+    color: var(--accent)
+}
+
+.shop-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.search {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card);
+    color: var(--fg);
+    min-width: 220px;
+}
+
+.search::placeholder {
+    color: var(--muted);
+}
+
+.chips {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.chip {
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--fg);
+    cursor: pointer;
+}
+
+.chip.active {
+    background: var(--fg);
+    color: var(--bg);
+    border-color: var(--fg);
+}
