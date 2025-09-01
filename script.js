@@ -1,6 +1,9 @@
 /**
  * Behavioral Targeting — Builder (Catalog version, 12 items)
- * Students only paste into the two PASTE HERE zones and use the cheatsheet.
+ * HOW TO USE (Quick):
+ * 1) Paste signal lines in the ACTIONS ZONE (below).
+ * 2) Paste rule packs inside evaluateSegment() where it says PASTE HERE (Segments).
+ * 3) Click Reset, act like your persona, watch the message flip.
  */
 
 // ---------- Simple traits store ----------
@@ -13,18 +16,18 @@ function resetTraits() { localStorage.removeItem(KEY); render(); }
 
 // ---------- Demo catalog data (12 items) ----------
 var products = [
-    { id: "hp1", title: "UltraFocus Headphones", price: 199, cat: "audio" },
-    { id: "spk2", title: "Mini Boom Speaker", price: 79, cat: "audio" },
-    { id: "kb3", title: "Mechanical Keyboard Pro", price: 129, cat: "peripherals" },
-    { id: "ms4", title: "Precision Mouse", price: 59, cat: "peripherals" },
-    { id: "mn5", title: "4K Monitor 27”", price: 329, cat: "peripherals" },
-    { id: "wb6", title: "HD Webcam", price: 89, cat: "peripherals" },
-    { id: "sd7", title: "1TB SD Card", price: 159, cat: "accessories" },
-    { id: "ch8", title: "USB-C Charger 65W", price: 49, cat: "power" },
-    { id: "dt9", title: "Desk Tripod", price: 39, cat: "accessories" },
-    { id: "mc10", title: "Podcast Mic", price: 149, cat: "audio" },
-    { id: "hs11", title: "Gaming Headset", price: 109, cat: "audio" },
-    { id: "sp12", title: "Smart Plug Duo", price: 35, cat: "smart" }
+    { id: "hp1", title: "UltraFocus Headphones", price: 199, cat: "audio", img: "https://picsum.photos/seed/hp1/400/300" },
+    { id: "spk2", title: "Mini Boom Speaker", price: 79, cat: "audio", img: "https://picsum.photos/seed/spk2/400/300" },
+    { id: "kb3", title: "Mechanical Keyboard Pro", price: 129, cat: "peripherals", img: "https://picsum.photos/seed/kb3/400/300" },
+    { id: "ms4", title: "Precision Mouse", price: 59, cat: "peripherals", img: "https://picsum.photos/seed/ms4/400/300" },
+    { id: "mn5", title: "4K Monitor 27”", price: 329, cat: "peripherals", img: "https://picsum.photos/seed/mn5/400/300" },
+    { id: "wb6", title: "HD Webcam", price: 89, cat: "peripherals", img: "https://picsum.photos/seed/wb6/400/300" },
+    { id: "sd7", title: "1TB SD Card", price: 159, cat: "accessories", img: "https://picsum.photos/seed/sd7/400/300" },
+    { id: "ch8", title: "USB-C Charger 65W", price: 49, cat: "power", img: "https://picsum.photos/seed/ch8/400/300" },
+    { id: "dt9", title: "Desk Tripod", price: 39, cat: "accessories", img: "https://picsum.photos/seed/dt9/400/300" },
+    { id: "mc10", title: "Podcast Mic", price: 149, cat: "audio", img: "https://picsum.photos/seed/mc10/400/300" },
+    { id: "hs11", title: "Gaming Headset", price: 109, cat: "audio", img: "https://picsum.photos/seed/hs11/400/300" },
+    { id: "sp12", title: "Smart Plug Duo", price: 35, cat: "smart", img: "https://picsum.photos/seed/sp12/400/300" }
 ];
 
 var state = { q: "", cat: "all" };
@@ -60,7 +63,9 @@ function renderCatalog() {
     c.innerHTML = list.map(function (p) {
         return (
             '<article class="card-prod" id="card-' + p.id + '">' +
-            '<div class="prod-img hover-target" id="img-' + p.id + '">' + p.title.split(" ")[0] + '</div>' +
+            '<div class="prod-img hover-target" id="img-' + p.id + '">' +
+            '<img src="' + p.img + '" alt="' + p.title + '">' +
+            '</div>' +
             '<div class="prod-body">' +
             '<h3 class="prod-title">' + p.title + '</h3>' +
             '<div class="price-row">' +
@@ -151,11 +156,10 @@ function evaluateSegment() {
         msg = "High-intent visitor: offer free shipping.";
     }
 
-    // ---------- PASTE HERE (Segments): add your own rules ----------
-    // Examples:
-    // if (sumByPrefix("cart_clicks_") >= 3) { msg = "Cart-lover: show bundle deals."; }
-    // if ((t.campaign || "") === "ad") { msg = "From ad campaign: show social proof."; }
-    // if ((t.scroll75||0) >= 1) { msg = "Deep scroller: suggest buying guide."; }
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    // PASTE HERE (Segments): paste ONE rule pack below (no edits needed)
+    // Example of the exact spot shown in the cheatsheet Skeleton.
+    // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     var msgEl = document.getElementById("message");
     if (msgEl) msgEl.textContent = msg;
@@ -200,91 +204,19 @@ document.addEventListener("DOMContentLoaded", function () {
     // Reset traits
     var resetBtn = document.getElementById("reset");
     if (resetBtn) {
-        resetBtn.addEventListener("click", function () {
-            resetTraits();
-        });
+        resetBtn.addEventListener("click", function () { resetTraits(); });
     }
+
+    // ===================== ACTIONS ZONE (paste signals below) =====================
+    // Paste 2–4 signal lines from the cheatsheet under this line.
+    // Example:
+    // document.querySelectorAll('.price-btn').forEach(b=>b.onclick=()=>incTrait('price_clicks_total'));
+    // ===============================================================================
 
     // Initial render of traits/message
     render();
 });
 
 /* ============================================================================
-   CHEATSHEET — COPY/PASTE OPTIONS
-   ----------------------------------------------------------------------------
-   HOW TO USE:
-   1) Add 1–2 ACTIONS in the PASTE HERE (Actions) zone above.
-   2) Add 1–2 SEGMENT RULES in the PASTE HERE (Segments) zone.
-   3) Click around/hover/scroll. Watch traits & message change.
+   REFERENCE CHEATSHEET (keep): paste in the zones above.
 ============================================================================ */
-
-/* ========= ACTIONS (paste in PASTE HERE Actions) =========
-
-1) Double-click on any Add to cart (strong intent)
-document.querySelectorAll(".add-btn").forEach(function(btn){
-  btn.addEventListener("dblclick", function(){ incTrait("cart_dbl_total"); });
-});
-
-2) Long hover on ANY product card (>= 1.2s)
-(function(){
-  var timers = new Map();
-  document.querySelectorAll(".card-prod").forEach(function(card){
-    var id = card.id.replace("card-","");
-    card.addEventListener("mouseenter", function(){
-      var t = setTimeout(function(){ incTrait("card_hover_"+id); }, 1200);
-      timers.set(card, t);
-    });
-    card.addEventListener("mouseleave", function(){
-      clearTimeout(timers.get(card));
-      timers.delete(card);
-    });
-  });
-})();
-
-3) Time on page 60s bucket
-setTimeout(function(){ incTrait("time60s"); }, 60000);
-
-4) Campaign from URL (?campaign=newsletter)
-var p = new URLSearchParams(location.search);
-var c = p.get("campaign");
-if (c) setTrait("campaign", c);
-
-5) Count specs clicks (already per-item; add global count)
-document.querySelectorAll(".specs-link").forEach(function(a){
-  a.addEventListener("click", function(){ incTrait("specs_total"); });
-});
-
-*/
-
-/* ========= SEGMENT RULES (paste in PASTE HERE Segments) =========
-
-A) Cart-lover (clicked cart across items >= 3)
-if (sumByPrefix("cart_clicks_") >= 3) {
-  msg = "Cart-lover: show bundle deals.";
-}
-
-B) Impulse buyer (double-clicked cart at least once)
-if ((t.cart_dbl_total || 0) >= 1) {
-  msg = "Impulse buyer: show limited-time offer.";
-}
-
-C) Deep explorer (long hovered images or cards)
-if (sumByPrefix("img_long_hover_") + sumByPrefix("card_hover_") >= 4) {
-  msg = "Deep explorer: highlight in-depth reviews.";
-}
-
-D) Specs-driven engineer (many specs clicks)
-if (sumByPrefix("specs_clicks_") >= 4 || (t.specs_total||0) >= 4) {
-  msg = "Specs-driven: surface comparison chart.";
-}
-
-E) Engaged (time60s + scroll50)
-if ((t.time60s||0) >= 1 && (t.scroll50||0) >= 1) {
-  msg = "Engaged: offer consultation or guide.";
-}
-
-F) Campaign-aware
-if ((t.campaign||"") === "newsletter") {
-  msg = "From newsletter: show subscriber perk.";
-}
-*/
