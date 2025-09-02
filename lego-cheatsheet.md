@@ -1,95 +1,106 @@
-# Builder – 45‑min Lego Exercise (Persona‑first)
+# Easy Builder – 40‑minute Exercise (Choose One)
 
-You will build a simple “targeting detector”. First plan a persona. Then paste 2–4 signal lines and 1–2 rule lines. That’s it.
+Goal: Make the page show a friendly message based on a simple behavior.
+Pick ONE mini‑mission below. Copy‑paste ONE signal and ONE rule. Done.
 
-Where to paste
-- Actions (signals): paste code in PASTE HERE (Actions)
-- Segments (rules): inside function `evaluateSegment()`, PASTE HERE (Segments)
+Where to paste (in `student-config.js`):
+- Signals: inside `STUDENT_SIGNALS(...)`
+- Message rules: inside `STUDENT_SEGMENTS(...)` (return a string or "")
 
-Step 1 — Make a persona (write, no code, 3–5 min)
-Fill the blanks (1–2 lines):
-- Name: __________ (example: “Audio Deal Hunter”)
-- Goal: __________ (example: “Find audio discounts quickly”)
-- Signals I’ll track (pick 2–3): price clicks, add to cart, specs clicks, long hover, search used, category chosen
-- Message to show: __________
+Quick terms (plain English):
+- Signals: what you count (the clicks or actions).
+- Message rule: how you decide what text to show. Return a string to show it; return '' to show nothing.
 
-Step 2 — Add ONLY the signals you picked (paste into Actions, 10–15 min)
-Each line records a behavior into a trait (saved in the browser). Paste only what you need.
-
-- Price details (count all clicks across all products by this user)
+Mini‑Mission A — Picture Superfan (click the same picture)
+1) Signal (copy‑paste as is)
 ```js
-document.querySelectorAll('.price-btn').forEach(b=>b.onclick=()=>incTrait('price_clicks_total'));
+// Count clicks on each product picture
+document.querySelectorAll('.prod-img').forEach(d=>d.onclick=()=>incTrait('img_clicks_'+d.id.replace('img-','')));
+```
+2) Message rule (copy‑paste as is)
+```js
+// If total picture clicks across products is 3+, show a simple message
+if (sumByPrefix('img_clicks_') >= 3) return 'You really like this!';
+return '';
 ```
 
-- Add to cart (count all clicks across all products)
+Mini‑Mission B — Cart Explorer (click Add to cart)
+1) Signal
 ```js
-document.querySelectorAll('.add-btn').forEach(b=>b.onclick=()=>incTrait('cart_clicks_total'));
+// Count all Add to cart clicks
+document.querySelectorAll('.add-btn').forEach(b=>b.onclick=()=>incTrait('cart_total'));
+```
+2) Message rule
+```js
+if ((t.cart_total||0) >= 2) return 'Cart curious — show fast checkout.';
+return '';
 ```
 
-- Specs link (count all spec link clicks)
+Mini‑Mission C — Specs Seeker (open specs links)
+1) Signal
 ```js
+// Count all specs clicks
 document.querySelectorAll('.specs-link').forEach(a=>a.onclick=()=>incTrait('specs_total'));
 ```
-
-- Long hover on a product card (≥ 1.2s = intent)
+2) Message rule
 ```js
-document.querySelectorAll('.card-prod').forEach(c=>{let t; c.onmouseenter=()=>{t=setTimeout(()=>incTrait('card_hover_'+c.id.replace('card-','')),1200)}; c.onmouseleave=()=>clearTimeout(t);});
+if ((t.specs_total||0) >= 2) return 'Wants details — show comparisons.';
+return '';
 ```
 
-- Search used (type 2+ letters)
+Mini‑Mission D — Price Checker (tap Price details)
+1) Signal
 ```js
-var sb=document.getElementById('searchBox'); if(sb) sb.oninput=()=>{ if((sb.value||'').length>=2) incTrait('search_used') };
+// Count all price detail clicks
+document.querySelectorAll('.price-btn').forEach(b=>b.onclick=()=>incTrait('price_total'));
+```
+2) Message rule
+```js
+if ((t.price_total||0) >= 2) return 'Deal hunter — highlight discounts.';
+return '';
 ```
 
-- Category chosen (save the picked category name: audio/peripherals/...)
+Mini‑Mission E — Hover Fan (hover and linger on pictures)
+1) Signal
 ```js
+// Count long hovers (≥ 1.2s) on any product image
+document.querySelectorAll('.prod-img').forEach(d=>{let tm; d.onmouseenter=()=>{tm=setTimeout(()=>incTrait('img_hover_total'),1200)}; d.onmouseleave=()=>clearTimeout(tm);});
+```
+2) Message rule
+```js
+if ((t.img_hover_total||0) >= 2) return 'Taking a closer look — show more images.';
+return '';
+```
+
+Mini‑Mission F — Specific Picture Favorite (pick one product)
+1) Signal (choose ONE product ID, e.g., hp1)
+```js
+// Count clicks on a specific product picture only
+document.getElementById('img-hp1').onclick=()=>incTrait('img_clicks_hp1');
+```
+2) Message rule
+```js
+if ((t.img_clicks_hp1||0) >= 2) return 'You really like: UltraFocus Headphones.';
+return '';
+```
+
+Mini‑Mission G — Category Chooser (save chosen category)
+1) Signal
+```js
+// Save the picked category name (audio/peripherals/accessories/power/smart)
 document.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>setTrait('category',ch.getAttribute('data-cat')));
 ```
-
-Step 3 — Add ONE ready‑made rule that matches your persona (paste into Segments, 15–20 min)
-Rules read traits and set the final message `msg`.
-
-Notes for rules
-- Numbers: use `(t.NAME ?? 0)` so missing becomes 0
-- Text: use `(t.NAME ?? '')`
-- Sum many items: `sumByPrefix('PREFIX_')`
-- Priority: later rules overwrite earlier ones (or use `else if`)
-
-Pick ONE rule pack (no edits needed)
-
-A) Deal Hunter (AND: search + category=audio + 2+ price clicks)
+2) Message rule
 ```js
-if ((t.search_used ?? 0) >= 1 && (t.category ?? '') === 'audio' && (t.price_clicks_total ?? 0) >= 2) {
-  msg = 'Audio deals: bundle + discount.';
-}
+if ((t.category||'') === 'audio') return 'Audio fan — show speakers & headphones.';
+return '';
 ```
 
-B) Research Mode (OR: specs ≥2 OR many long hovers)
-```js
-if ((t.specs_total ?? 0) >= 2 || sumByPrefix('card_hover_') >= 3) {
-  msg = 'Research mode: show comparisons.';
-}
-```
+How to test (2 minutes)
+- Click “Reset traits”.
+- Do your chosen action a few times (e.g., click the same picture 3×).
+- Watch “Live message” change.
 
-C) Cart Lover (sum all cart clicks across items)
-```js
-if (sumByPrefix('cart_clicks_') >= 3) {
-  msg = 'Cart-lover: free shipping.';
-}
-```
-
-D) Return Visitor (visited again AND stayed 20s once)
-```js
-if ((t.visits ?? 0) >= 2 && (t.time20s ?? 0) >= 1) {
-  msg = 'Welcome back — free shipping unlocked.';
-}
-```
-
-Step 4 — Test (1–2 min)
-- Click “Reset traits”
-- Act like your persona (do the signals you picked)
-- Watch “Saved traits”; when your rule is true, “Live message” changes
-- Too hard? lower numbers (e.g., 2 → 1). Too easy? raise them.
-
-Extra (optional)
-- Add a second rule pack under the first to create a “plan B” message. The last matching rule wins. 
+Tips
+- “Saved traits” panel shows what’s counted (e.g., `img_clicks_*`, `img_hover_total`, `category`).
+- Too easy/hard? Do fewer/more actions. No code change needed. 
